@@ -9,47 +9,15 @@ const columns = [
   { header: "Nome do local", property: "name" },
   { header: "Endereço", property: "address" },
   { header: "Cidade e Estado", property: "cityAndState" },
-  { header: "Portões cadastrados", property: "gates" },
-  { header: "Atualização", property: "updatedAt" },
+  { header: "Portões cadastrados", property: "entrances" },
+  // { header: "Atualização", property: "updatedAt" },
 ];
-
-const mockData = {
-  data: [
-    {
-      id: "mock1",
-      name: "modck1",
-      address: "modck1",
-      cityAndState: "modck1",
-      gates: "modck1",
-      updatedAt: "modck1",
-    },
-    {
-      id: "mock2",
-      name: "modck2",
-      address: "modck2",
-      cityAndState: "modck2",
-      gates: "modck2",
-      updatedAt: "modck2",
-    },
-    {
-      id: "mock3",
-      name: "modck3",
-      address: "modck3",
-      cityAndState: "modck3",
-      gates: "modck3",
-      updatedAt: "modck3",
-    },
-  ],
-  page: 1,
-  totalPages: 1,
-};
-
-const data = mockData.data;
-const currentPage = mockData.page;
-const totalPages = mockData.totalPages;
 
 export function LocationsPage() {
   const [searchArgument, setSearchArgument] = useState("");
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   function onDelete(id: string) {
     console.log(id);
@@ -60,11 +28,39 @@ export function LocationsPage() {
   }
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/locations");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log("result", result);
+        const showData = result.data.map((location: any) => ({
+          ...location,
+          cityAndState: `${location.city}, ${location.state}`,
+        }));
+        setData(showData);
+        setCurrentPage(result.page);
+        setTotalPages(result.totalPages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const delayDebounce = setTimeout(() => {
       console.log("search for", searchArgument);
     }, 500);
     return () => clearTimeout(delayDebounce);
   }, [searchArgument]);
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
 
   return (
     <>
@@ -136,16 +132,16 @@ export function LocationsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((row) => (
+                  {data?.map((row) => (
                     <tr key={row.id} className="even:bg-gray-800">
                       {columns.map((column) => (
                         <td
                           className="py-2 px-4 text-ellipsis overflow-hidden max-w-xs"
                           key={String(column.property)}
                         >
-                          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                          {/* @ts-expect-error */}
-                          {String(row[column.property])}
+                          {column.property === "entrances"
+                            ? row[column.property].join(", ")
+                            : String(row[column.property])}
                         </td>
                       ))}
                       <td className="py-2 px-4">
@@ -157,12 +153,12 @@ export function LocationsPage() {
                           >
                             Apagar
                           </button>
-                          <Link
+                          {/* <Link
                             className="text-yellow-300 hover:text-yellow-500"
-                            to="/"
+                            to="/locais"
                           >
                             Editar
-                          </Link>
+                          </Link> */}
                         </div>
                       </td>
                     </tr>

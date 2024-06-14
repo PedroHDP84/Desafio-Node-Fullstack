@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../components/header";
 import { FormField } from "../components/FormField";
 import { STATES } from "../utils/Helpers";
 import { MultiInput } from "../components/multiInput";
 
-// eslint-disable-next-line react-refresh/only-export-components
-export enum LocationType {
+enum LocationType {
   Stadium = "Stadium",
   Teather = "Teather",
   Other = "Other",
 }
 
-export type Location = {
+export type LocationInputs = {
   name: string;
   nickname?: string;
   type: LocationType;
@@ -25,8 +24,8 @@ export type Location = {
   complement?: string;
   email: string;
   phone?: string;
-  entradas?: string[];
-  catracas?: string[];
+  entrances?: string[];
+  turnstiles?: string[];
 };
 
 export function AddLocationPage() {
@@ -37,11 +36,39 @@ export function AddLocationPage() {
   } = useForm<LocationInputs>();
   const [entrances, setEntrances] = useState<string[]>([]);
   const [gates, setGates] = useState<string[]>([]);
+  const [addLocationError, setAddLocationError] = useState("");
+  const navigate = useNavigate();
 
-  const [addLocationError, setAddLocationError] = useState();
+  async function onSubmit(data: LocationInputs) {
+    try {
+      // Add entrances and turnstiles to the data object
+      const locationData = {
+        ...data,
+        entrances,
+        turnstiles: gates,
+      };
 
-  function onSubmit(data: LocationInputs) {
-    console.log("submit", data);
+      const response = await fetch("http://localhost:3000/locations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(locationData),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log("Result:", result);
+      navigate("/locais");
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        setAddLocationError(error.message);
+      } else {
+        setAddLocationError("An unknown error occurred.");
+      }
+    }
   }
 
   const currentRoute = { name: "Locais", href: "/locais" };
@@ -264,7 +291,7 @@ export function AddLocationPage() {
                 className="bg-gray-200 text-gray-900 py-2 px-4 rounded hover:bg-gray-300"
                 disabled={isSubmitting}
               >
-                Cadastrar
+                {isSubmitting ? "Salvando..." : "Cadastrar"}
               </button>
             </div>
           </form>

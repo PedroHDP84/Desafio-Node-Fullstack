@@ -49,6 +49,7 @@ export function MultiInput({
           className=" bg-[#333B49] block w-full pl-3 pr-10 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border focus:border-indigo-500 sm:text-sm text-white"
         />
         <button
+          type="button"
           onClick={handleAddValue}
           aria-label={iconAriaLabel}
           className=" bg-[#051D41] text-white pb-1 rounded h-10 w-12"
@@ -65,6 +66,7 @@ export function MultiInput({
           >
             <span>{value}</span>
             <button
+              type="button"
               onClick={() => removeValue(value)}
               aria-label="Remove"
               className="ml-2 text-red-500 hover:text-red-700"

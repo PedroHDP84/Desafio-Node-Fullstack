@@ -21,8 +21,15 @@ export class LocationController {
   }
 
   @Get()
-  async getAllLocations(): Promise<Location[]> {
-    return this.locationService.getAllLocations();
+  async getAllLocations(): Promise<{
+    data: Location[];
+    page: number;
+    totalPages: number;
+  }> {
+    const data = await this.locationService.getAllLocations();
+    const page = 1;
+    const totalPages = 1;
+    return { data, page, totalPages };
   }
 
   @Get(':id')

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import icon from "../../assets/mdFestival.svg";
 
@@ -8,28 +9,16 @@ type LocationData = {
   id: string;
 };
 
-const mockData: LocationData[] = [
-  {
-    id: "mockid1",
-    name: "Morumbis",
-    address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entrances: ["C", "D", "E", "F", "G", "H", "I", "J", "K"],
-  },
-  {
-    id: "mockid2",
-    name: "Allianz Parque",
-    address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entrances: ["3", "4", "5", "6", "7", "8", "9", "10"],
-  },
-  {
-    id: "mockid3",
-    name: "Neo Química Arena",
-    address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entrances: ["lazar@chakra-ui.com"],
-  },
-];
-
 export function LocationsSection() {
+  const [locations, setLocations] = useState<LocationData[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/locations")
+      .then((response) => response.json())
+      .then((data) => setLocations(data.data.slice(0, 3))) // Map only the first 3 locations
+      .catch((error) => console.error("Error fetching locations:", error));
+  }, []);
+
   return (
     <>
       <div className={`w-full bg-[#2F3B28] p-6 rounded-lg md:max-w-[600px]`}>
@@ -60,7 +49,7 @@ export function LocationsSection() {
         <div className="overflow-x-auto">
           <table className="w-full table-auto text-white">
             <tbody>
-              {mockData.map((item) => (
+              {locations.map((item) => (
                 <tr key={String(item.id)} className="border-t border-gray-700">
                   <td
                     className="h-[3.25rem] max-w-[125px] overflow-hidden truncate"

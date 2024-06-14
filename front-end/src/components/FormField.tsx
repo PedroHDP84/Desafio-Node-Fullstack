@@ -58,8 +58,8 @@ export function FormField<T extends FieldValues>({
         {`${label}${isRequired ? "*" : ""}`}
       </label>
       {type == "select" ? (
-        <select {...commonProps}>
-          <option key={"hiddenOptionRandom654X"} value="" disabled selected>
+        <select {...commonProps} defaultValue="placeholder">
+          <option key={"hiddenOptionRandom654X"} value="placeholder" disabled>
             {placeholder}
           </option>
           {options?.map((option) => (
