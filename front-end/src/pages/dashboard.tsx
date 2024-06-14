@@ -8,7 +8,10 @@ export function Dashboard() {
   const userMockName = "Mariana";
 
   return (
-    <div style={{ backgroundImage: `url(${bg})` }} className="bg-cover px-6">
+    <div
+      style={{ backgroundImage: `url(${bg})` }}
+      className="bg-cover px-6 flex-1 m-auto w-full"
+    >
       <Header />
       <div className="flex justify-center items-center py-9 max-w-[1300px] mx-auto h-full w-full">
         <div className="w-full max-w-[1300px]">

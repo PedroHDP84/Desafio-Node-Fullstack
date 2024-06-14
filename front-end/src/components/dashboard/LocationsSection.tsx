@@ -4,7 +4,7 @@ import icon from "../../assets/mdFestival.svg";
 type LocationData = {
   name: string;
   address: string;
-  entries: string[];
+  entrances: string[];
   id: string;
 };
 
@@ -13,19 +13,19 @@ const mockData: LocationData[] = [
     id: "mockid1",
     name: "Morumbis",
     address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entries: ["C", "D", "E", "F", "G", "H", "I", "J", "K"],
+    entrances: ["C", "D", "E", "F", "G", "H", "I", "J", "K"],
   },
   {
     id: "mockid2",
     name: "Allianz Parque",
     address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entries: ["3", "4", "5", "6", "7", "8", "9", "10"],
+    entrances: ["3", "4", "5", "6", "7", "8", "9", "10"],
   },
   {
     id: "mockid3",
     name: "Neo Química Arena",
     address: "Avenida Francisco Matarazzo, 1705 – Água Branca",
-    entries: ["lazar@chakra-ui.com"],
+    entrances: ["lazar@chakra-ui.com"],
   },
 ];
 
@@ -41,8 +41,7 @@ export function LocationsSection() {
             </div>
             <p className="text-white">Confira todos os locais cadastrados!</p>
           </div>
-          {/* <Link to="/locais"> */}
-          <Link to="/">
+          <Link to="/locais">
             <button className="bg-[#CAD6EC] text-[#10141D] hover:bg-[#828fa8] hover:text-white py-2 px-4 rounded">
               Conferir locais
             </button>
@@ -54,8 +53,7 @@ export function LocationsSection() {
           <h1 className="text-md mb-6 text-white">
             Últimos eventos adicionados
           </h1>
-          <Link to={"/"} className="text-[#6D99FB] underline">
-            {/* <Link to={"/locais"} className="text-[#6D99FB] underline"> */}
+          <Link to={"/locais"} className="text-[#6D99FB] underline">
             Ver todos
           </Link>
         </div>
@@ -78,9 +76,9 @@ export function LocationsSection() {
                   </td>
                   <td
                     className="h-[3.25rem] max-w-[125px] overflow-hidden truncate"
-                    key="entries"
+                    key="entrances"
                   >
-                    {String(item.entries)}
+                    {String(item.entrances)}
                   </td>
                 </tr>
               ))}
