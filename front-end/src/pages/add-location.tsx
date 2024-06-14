@@ -13,7 +13,7 @@ export enum LocationType {
   Other = "Other",
 }
 
-export type LocationInputs = {
+export type Location = {
   name: string;
   nickname?: string;
   type: LocationType;
@@ -25,6 +25,8 @@ export type LocationInputs = {
   complement?: string;
   email: string;
   phone?: string;
+  entradas?: string[];
+  catracas?: string[];
 };
 
 export function AddLocationPage() {
