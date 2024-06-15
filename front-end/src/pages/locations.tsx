@@ -19,8 +19,18 @@ export function LocationsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  function onDelete(id: string) {
-    console.log(id);
+  async function onDelete(id: string) {
+    try {
+      const response = await fetch(`http://localhost:3000/locations/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to delete location with id ${id}`);
+      }
+      setData(data.filter((location: any) => location.id !== id));
+    } catch (error) {
+      console.error("Error deleting location:", error);
+    }
   }
 
   function onPageChange(page: number) {
@@ -101,7 +111,8 @@ export function LocationsPage() {
                   </span>
                   <input
                     type="text"
-                    placeholder="Pesquise por nome ou apelido do local."
+                    // placeholder="Pesquise por nome ou apelido do local."
+                    placeholder="NOT YET IMPLEMENTED"
                     value={searchArgument}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setSearchArgument(e.target.value)
@@ -132,7 +143,7 @@ export function LocationsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((row) => (
+                  {data?.map((row: any) => (
                     <tr key={row.id} className="even:bg-gray-800">
                       {columns.map((column) => (
                         <td
@@ -147,6 +158,7 @@ export function LocationsPage() {
                       <td className="py-2 px-4">
                         <div className="flex space-x-4">
                           <button
+                            type="button"
                             aria-label="Remover"
                             className="text-red-400 hover:text-red-500"
                             onClick={() => onDelete(row.id)}
