@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import icon from "../../assets/mdLocal.svg";
+import { useEffect, useState } from "react";
 
 type EventData = {
   name: string;
@@ -8,28 +9,17 @@ type EventData = {
   id: string;
 };
 
-const mockData: EventData[] = [
-  {
-    id: "mockId1",
-    name: "Final Copa América",
-    tag: "Futebol",
-    locationName: "Morumbis",
-  },
-  {
-    id: "mockId2",
-    name: "Semi Final Copa América",
-    tag: "Futebol",
-    locationName: "Morumbis",
-  },
-  {
-    id: "mockId3",
-    name: "Love on tour - Harry Styles",
-    tag: "Show",
-    locationName: "Morumbis",
-  },
-];
-
 export function EventsSection() {
+  const [events, setEvents] = useState<EventData[]>([]);
+  44;
+
+  useEffect(() => {
+    fetch("http://localhost:3000/events")
+      .then((response) => response.json())
+      .then((data) => setEvents(data.slice(0, 3))) // Map only the first 3 locations
+      .catch((error) => console.error("Error fetching locations:", error));
+  }, []);
+
   return (
     <>
       <div className={`w-full bg-[#461527] p-6 rounded-lg md:max-w-[600px]`}>
@@ -60,7 +50,7 @@ export function EventsSection() {
         <div className="overflow-x-auto">
           <table className="w-full table-auto text-white">
             <tbody>
-              {mockData.map((item) => (
+              {events.map((item: any) => (
                 <tr key={String(item.id)} className="border-t border-gray-700">
                   <td
                     className="h-[3.25rem] max-w-[125px] overflow-hidden truncate"

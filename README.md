@@ -1,3 +1,48 @@
+#
+
+#
+
+#
+
+# 🚀 Observações de implmentação:
+
+- Para regra "Um local não pode receber mais de um evento no mesmo horário": **Como não tem onde colocar horário de fim de evento na UI, horario de fim de evento foi considerado como fim do dia.**
+
+- **Foco foi dado para requisitos obrigatorios.**
+  - **UI responsivo**
+  - **Validação de formulários**
+  - **Navegação**
+  - **Modelar banco corretamente**
+  - **Garantir que Regras de Negócio são garantidas pela API.**
+
+#
+
+# 🚀 Run Front-end:
+
+-npm install
+
+-npm run dev
+
+# 🚀 Run Front-end:
+
+-run postgreSQL in your system.
+
+-create a event_managment database.
+
+-add a .env file with DATABASE_URL="postgresql://user-name:password@localhost:5433/event_management?schema=public"
+
+-npm install
+
+-npm run migration:run
+
+-npm run start
+
+#
+
+#
+
+#
+
 <p align="center">
   <img title="a title" alt="Alt text" src="https://media.licdn.com/dms/image/D4E16AQGjCVuzlCthvg/profile-displaybackgroundimage-shrink_200_800/0/1690574706700?e=2147483647&v=beta&t=zlY1Mc10yQ3gA9qiZ4sZ7m8PkE-HIu8Haa1fUyKb_fU">
 </p>
@@ -15,7 +60,7 @@ Desenvolver uma aplicação frontend para gerenciar um sistema de gerenciamento 
 1. Os locais terão diferentes entradas/portões e o acesso às catracas diferem pelo tipo de ingresso.
 2. Os eventos deverão estar sempre associados a um local.
 3. Eventos deverão ter data e horário de início e fim.
-4. Um local não pode receber mais de um evento no mesmo horário, assim como um evento não ocorre em 2 locais ao mesmo tempo. 
+4. Um local não pode receber mais de um evento no mesmo horário, assim como um evento não ocorre em 2 locais ao mesmo tempo.
 
 # Desafio Frontend | ReactJS
 
@@ -40,7 +85,7 @@ Desenvolver uma aplicação frontend para gerenciar um sistema de gerenciamento 
 3. Uso de um linter (como ESLint) e formatador de código (como Prettier).
 4. Implementação de funcionalidades adicionais como busca, filtros e ordenação.
 5. Deploy da aplicação (pode usar Vercel, Netlify, etc.)
-    
+
 ## 🗳️ Instruções de Submissão:
 
 1. Faça um fork deste repositório para sua conta pessoal do GitHub.
@@ -75,7 +120,7 @@ Desenvolver uma aplicação frontend para gerenciar um sistema de gerenciamento 
 
 - Com base nas telas propostas no Figma abaixo, modele o banco de dados utilizando a ferramenta que preferir.
 - Lembre de adicionar ao seu repositório o link ou imagem da modelagem.
-  
+
 [Figma](https://www.figma.com/file/ztqsEQWF8BXskx8UerVztk/OnEntree---Desafio-Fullstack?type=design&node-id=13%3A156&mode=design&t=2b29VVsfWoTXCOsS-1)
 
 ### 4. Validações e Erros:
