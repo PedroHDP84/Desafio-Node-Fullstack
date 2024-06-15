@@ -104,7 +104,7 @@ export function AddLocationPage() {
           >
             <div>
               <h2 className="mb-6 text-white">Informações básicas</h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<LocationInputs>
                   fieldId="name"
                   errors={errors}
@@ -155,7 +155,7 @@ export function AddLocationPage() {
 
             <div>
               <h2 className="mb-6 text-white">Localização</h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<LocationInputs>
                   fieldId="city"
                   errors={errors}
@@ -213,7 +213,7 @@ export function AddLocationPage() {
 
             <div>
               <h2 className="mb-6 text-white">Contato</h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<LocationInputs>
                   fieldId="email"
                   errors={errors}
@@ -251,7 +251,7 @@ export function AddLocationPage() {
               <h2 className="mb-6 text-white">
                 Cadastro de entradas e catracas
               </h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <MultiInput
                   handleValues={setEntrances}
                   placeholder="Insira as entradas"

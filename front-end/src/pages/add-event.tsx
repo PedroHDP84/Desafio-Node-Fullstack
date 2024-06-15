@@ -130,7 +130,7 @@ export function AddEventPage() {
           >
             <div>
               <h2 className="mb-6 text-white">Informações básicas</h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<EventInputs>
                   fieldId="name"
                   errors={errors}
@@ -156,7 +156,7 @@ export function AddEventPage() {
               </div>
             </div>
             <div>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<EventInputs>
                   fieldId="startDate"
                   errors={errors}
@@ -189,7 +189,7 @@ export function AddEventPage() {
               </div>
             </div>
             <div>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<EventInputs>
                   fieldId="locationId"
                   errors={errors}
@@ -207,7 +207,7 @@ export function AddEventPage() {
 
             <div>
               <h2 className="mb-6 text-white">Contato</h2>
-              <div className="grid grid-cols-2 gap-10">
+              <div className="md:grid md:grid-cols-2 md:gap-10">
                 <FormField<EventInputs>
                   fieldId="email"
                   errors={errors}
