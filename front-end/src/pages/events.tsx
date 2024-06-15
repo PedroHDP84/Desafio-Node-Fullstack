@@ -3,58 +3,51 @@ import { Link } from "react-router-dom";
 import searchIcon from "../assets/search.svg";
 import { Header } from "../components/header";
 
-const currentRoute = { name: "Locais", href: "/eventos" };
+const currentRoute = { name: "Eventos", href: "/eventos" };
 
 const columns = [
   { header: "Evento", property: "name" },
   { header: "Tipo", property: "type" },
-  { header: "Local associado", property: "placeName" },
+  { header: "Local associado", property: "locationName" },
   { header: "Endereço", property: "address" },
-  { header: "Portões cadastrados", property: "gates" },
-  { header: "Data", property: "startsAt" },
-  // { header: "Atualização", property: "updatedAt" },
+  { header: "Portões cadastrados", property: "entrances" },
+  { header: "Data", property: "startDate" },
 ];
 
 export function EventsPage() {
   const [searchArgument, setSearchArgument] = useState("");
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
   async function onDelete(id: string) {
     try {
-      const response = await fetch(`http://localhost:3000/locations/${id}`, {
+      const response = await fetch(`http://localhost:3000/events/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error(`Failed to delete location with id ${id}`);
+        throw new Error(`Failed to delete event with id ${id}`);
       }
-      setData(data.filter((location: any) => location.id !== id));
+      setData(data.filter((event: any) => event.id !== id));
     } catch (error) {
-      console.error("Error deleting location:", error);
+      console.error("Error deleting event:", error);
     }
-  }
-
-  function onPageChange(page: number) {
-    console.log(page);
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/locations");
+        const response = await fetch("http://localhost:3000/events");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
         console.log("result", result);
-        const showData = result.data.map((location: any) => ({
-          ...location,
-          cityAndState: `${location.city}, ${location.state}`,
+        const showData = result.map((event: any) => ({
+          ...event,
+          locationName: event.location.name,
+          entrances: event.location.entrances,
+          address: event.location.address,
         }));
         setData(showData);
-        setCurrentPage(result.page);
-        setTotalPages(result.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -95,9 +88,9 @@ export function EventsPage() {
             </ol>
           </nav>
           <div className="mb-6">
-            <h1 className="text-3xl mt-5 text-white">Locais</h1>
+            <h1 className="text-3xl mt-5 text-white">Eventos</h1>
             <h2 className="text-sm mt-5 text-white">
-              Confira a lista de todos os locais cadastrados
+              Confira a lista de todos os eventos cadastrados
             </h2>
           </div>
           <div className="bg-[#10141D] justify-between p-6 rounded-2xl">
@@ -113,7 +106,7 @@ export function EventsPage() {
                   </span>
                   <input
                     type="text"
-                    // placeholder="Pesquise por nome ou apelido do local."
+                    // placeholder="Pesquise por nome do evento."
                     placeholder="NOT YET IMPLEMENTED"
                     value={searchArgument}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -123,10 +116,9 @@ export function EventsPage() {
                   />
                 </div>
               </div>
-
-              <Link to="/locais/criar">
+              <Link to="/eventos/criar">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                  Adicionar local
+                  Adicionar evento
                 </button>
               </Link>
             </div>
@@ -154,6 +146,10 @@ export function EventsPage() {
                         >
                           {column.property === "entrances"
                             ? row[column.property].join(", ")
+                            : column.property === "startDate"
+                            ? new Date(row[column.property]).toLocaleDateString(
+                                "pt-BR"
+                              )
                             : String(row[column.property])}
                         </td>
                       ))}
@@ -167,12 +163,6 @@ export function EventsPage() {
                           >
                             Apagar
                           </button>
-                          {/* <Link
-                            className="text-yellow-300 hover:text-yellow-500"
-                            to="/locais"
-                          >
-                            Editar
-                          </Link> */}
                         </div>
                       </td>
                     </tr>
@@ -180,24 +170,6 @@ export function EventsPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-          <div className="flex justify-center mt-6">
-            {Array.from({ length: totalPages }, (_, index) => {
-              const realPage = index + 1;
-              return (
-                <button
-                  key={realPage}
-                  className={`mx-1 px-3 py-1 rounded ${
-                    realPage === currentPage
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-800 text-gray-500 hover:bg-gray-700"
-                  }`}
-                  onClick={() => onPageChange(realPage)}
-                >
-                  {realPage}
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>

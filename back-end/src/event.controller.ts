@@ -27,13 +27,40 @@ export class EventController {
       type: EventType;
       startDate: Date;
       endDate: Date;
-      locationId: number;
+      locationId: string;
       phone: string;
       email: string;
     },
   ): Promise<Event> {
+    const locationId = parseInt(data.locationId, 10); // Parse locationId to number
+    if (isNaN(locationId)) {
+      throw new Error('Invalid locationId');
+    }
+
+    const existingEvent = await this.prisma.event.findFirst({
+      where: {
+        locationId,
+        startDate: {
+          gte: new Date(data.startDate), // Start of selected date
+          lt: new Date(
+            new Date(data.startDate).setDate(
+              new Date(data.startDate).getDate() + 1,
+            ),
+          ),
+        },
+      },
+    });
+
+    if (existingEvent) {
+      return {
+        // @ts-expect-error-error
+        error:
+          'Outro evento já está agendado no local selecionado na mesma data.',
+      };
+    }
+
     const location = await this.prisma.location.findUnique({
-      where: { id: data.locationId },
+      where: { id: locationId },
     });
     if (!location) {
       throw new Error('Location not found');
@@ -56,7 +83,14 @@ export class EventController {
 
   @Get()
   async getAllEvents(): Promise<Event[]> {
-    return this.eventService.getAllEvents();
+    const events = await this.eventService.getAllEvents();
+    for (const event of events) {
+      // @ts-expect-error-error
+      event.location = await this.prisma.location.findUnique({
+        where: { id: event.locationId },
+      });
+    }
+    return events;
   }
 
   @Get(':id')

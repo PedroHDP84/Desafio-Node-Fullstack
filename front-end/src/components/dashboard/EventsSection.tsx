@@ -41,8 +41,7 @@ export function EventsSection() {
             </div>
             <p className="text-white">Confira todos os eventos cadastrados!</p>
           </div>
-          {/* <Link to="/eventos"> */}
-          <Link to="/">
+          <Link to="/eventos">
             <button className="bg-[#CAD6EC] text-[#10141D] hover:bg-[#828fa8] hover:text-white py-2 px-4 rounded">
               Conferir eventos
             </button>
@@ -54,8 +53,7 @@ export function EventsSection() {
           <h1 className="text-md mb-6 text-white">
             Últimos eventos adicionados
           </h1>
-          <Link to={"/"} className="text-[#6D99FB] underline">
-            {/* <Link to={"/eventos"} className="text-[#6D99FB] underline"> */}
+          <Link to={"/eventos"} className="text-[#6D99FB] underline">
             Ver todos
           </Link>
         </div>

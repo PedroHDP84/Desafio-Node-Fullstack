@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import { Dashboard } from "../pages/dashboard";
 import { LocationsPage } from "../pages/locations";
 import { AddLocationPage } from "../pages/add-location";
+import { EventsPage } from "../pages/events";
+import { AddEventPage } from "../pages/add-event";
 
 export const router = createBrowserRouter([
   {

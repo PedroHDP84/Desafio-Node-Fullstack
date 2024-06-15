@@ -12,9 +12,9 @@ export function Header() {
         <a href="/" className="text-white">
           Home
         </a>
-        {/* <a href="/eventos" className="text-white">
+        <a href="/eventos" className="text-white">
           Eventos
-        </a> */}
+        </a>
         <a href="/locais" className="text-white">
           Locais
         </a>
