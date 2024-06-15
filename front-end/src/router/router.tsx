@@ -16,4 +16,12 @@ export const router = createBrowserRouter([
     path: "/locais/criar",
     element: <AddLocationPage />,
   },
+  {
+    path: "/eventos",
+    element: <EventsPage />,
+  },
+  {
+    path: "/eventos/criar",
+    element: <AddEventPage />,
+  },
 ]);
